@@ -2,6 +2,21 @@ import 'package:flutter/material.dart';
 import 'services/cat_api_service.dart';
 import 'models/cat_image.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Cat API Example',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: HomePage(),
+    );
+  }
+}
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -34,23 +49,19 @@ class _HomePageState extends State<HomePage> {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData) {
-            return Center(child: Text('No data available'));
           } else {
             final catImage = snapshot.data!;
-            return SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.network(catImage.url),
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: _loadNewCatImage,
-                      child: Text('Get Another Cat'),
-                    ),
-                  ],
-                ),
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.network(catImage.url),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _loadNewCatImage,
+                    child: Text('Get Another Cat'),
+                  ),
+                ],
               ),
             );
           }
